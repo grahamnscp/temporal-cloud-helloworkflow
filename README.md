@@ -26,5 +26,5 @@ go run starter/main.go
 
 Note: Added upserting a custom search attribute, please ensure that the attribute is present on the temporal server before running sample.  
 * Attribute name: CustomStringField  
-* Attribute type: Text  
+* Attribute type: String  
 
