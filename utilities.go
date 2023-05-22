@@ -10,6 +10,7 @@ import (
 
   "go.temporal.io/sdk/client"
   "go.temporal.io/sdk/converter"
+  "go.temporal.io/sdk/workflow"
 
   dataconverter "temporalcloudhelloworkflow/dataconverter"
 )
@@ -91,3 +92,15 @@ func LoadClientOption () (client.Options, error) {
   }
 }
 
+/* UpcertSearchAttribute in Temporal Workflow */
+func UpcertSearchAttribute (ctx workflow.Context, attribute string, value string) (err error) {
+
+  attributes := map[string]interface{} {
+    attribute: value,
+  }
+  upserterr := workflow.UpsertSearchAttributes(ctx, attributes)
+  if upserterr != nil {
+    log.Println("Start: Failed to Upsert Search Attributes", upserterr)
+  }
+  return upserterr
+}
