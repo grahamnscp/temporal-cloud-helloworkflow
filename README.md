@@ -10,15 +10,17 @@ Set environment variables:
 * TEMPORAL_NAMESPACE
 * TEMPORAL_TLS_CERT
 * TEMPORAL_TLS_KEY
-
+* TEMPORAL_INSECURE_SKIP_VERIFY=false
+* ENCRYPT_PAYLOAD=true
+* DATACONVERTER_ENCRYPTION_KEY_ID=secret
 
 To run, start one or more workers in separate terminals:
 ```
-go run worker/main.go -target-host $TEMPORAL_HOST_URL -namespace $TEMPORAL_NAMESPACE -client-cert $TEMPORAL_TLS_CERT -client-key $TEMPORAL_TLS_KEY
+go run worker/main.go
 ```
 
 Start/run the workflow:
 ```
-go run starter/main.go -target-host $TEMPORAL_HOST_URL -namespace $TEMPORAL_NAMESPACE -client-cert $TEMPORAL_TLS_CERT -client-key $TEMPORAL_TLS_KEY
+go run starter/main.go
 ```
 
