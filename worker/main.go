@@ -2,19 +2,19 @@ package main
 
 import (
 	"log"
-        "os"
 
-	"github.com/grahamh/temporalcloudhelloworkflow"
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
+
+	hellowf "temporalcloudhelloworkflow"
 )
 
 func main() {
 
-	clientOptions, err := temporalcloudhelloworkflow.ParseClientOptionFlags(os.Args[1:])
- 	if err != nil {
-		log.Fatalf("Invalid arguments: %v", err)
-	}
+	clientOptions, err := hellowf.LoadClientOption()
+	if err != nil {
+		log.Fatalf("Failed to load Temporal Cloud environment: %v", err)
+        }
         c, err := client.Dial(clientOptions)
 	if err != nil {
 		log.Fatalln("Unable to make client", err)
@@ -25,9 +25,9 @@ func main() {
 	w := worker.New(c, "hello-world-taskqueue", worker.Options{})
 
 	// Register the workflow and Activities
-	w.RegisterWorkflow(temporalcloudhelloworkflow.HelloWorkflow)
-	w.RegisterActivity(temporalcloudhelloworkflow.HelloActivity)
-	w.RegisterActivity(temporalcloudhelloworkflow.HiActivity)
+	w.RegisterWorkflow(hellowf.HelloWorkflow)
+	w.RegisterActivity(hellowf.HelloActivity)
+	w.RegisterActivity(hellowf.HiActivity)
 
 	// Run the Activity in the Workflow (so it will return to the starter client)
 	err = w.Run(worker.InterruptCh())

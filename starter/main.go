@@ -3,17 +3,17 @@ package main
 import (
 	"context"
 	"log"
-	"os"
 
-	"github.com/grahamh/temporalcloudhelloworkflow"
 	"go.temporal.io/sdk/client"
+
+	hellowf "temporalcloudhelloworkflow"
 )
 
 func main() {
 
-        clientOptions, err := temporalcloudhelloworkflow.ParseClientOptionFlags(os.Args[1:])
+        clientOptions, err := hellowf.LoadClientOption()
         if err != nil {
-                log.Fatalf("Invalid arguments: %v", err)
+                log.Fatalf("Failed to load Temporal Cloud environment: %v", err)
         }
         c, err := client.Dial(clientOptions)
         if err != nil {
@@ -27,7 +27,7 @@ func main() {
 	}
 
 	log.Println("HelloWorkflow starting..")
-	we, err := c.ExecuteWorkflow(context.Background(), workflowOptions, temporalcloudhelloworkflow.HelloWorkflow, "HelloWorkflow test via temporal cloud")
+	we, err := c.ExecuteWorkflow(context.Background(), workflowOptions, hellowf.HelloWorkflow, "HelloWorkflow test via temporal cloud")
 	if err != nil {
 		log.Fatalln("Unable to execute HelloWorkflow", err)
 	}
